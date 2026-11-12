@@ -201,6 +201,27 @@ html{touch-action:manipulation}
 .venue .vt{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--crimson);margin:12px 0 4px}
 .venue .vd{font-family:var(--sans);font-size:14px;margin:0 0 8px;opacity:.75}
 .venue h3{margin:6px 0 10px}
+html,body{overflow-x:hidden;max-width:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-size:16px}
+section{text-align:center;padding:72px 18px}
+.wrap{width:100%;max-width:1040px;margin-left:auto;margin-right:auto}
+h2{font-size:clamp(28px,7.5vw,52px)}
+.sub{margin-left:auto;margin-right:auto;font-size:16px}
+.frame{width:calc(100% - 24px);padding:16px 4px;margin-left:auto;margin-right:auto}
+.frame p[style*="letter-spacing"]{font-size:13px!important;letter-spacing:.1em!important}
+.names{font-size:clamp(32px,10.5vw,72px)}
+.hero-date{font-size:clamp(18px,5vw,24px)}
+.card{text-align:center;padding:24px 18px}
+.scene{justify-content:center}
+.scene b{font-size:clamp(56px,16vw,76px)}
+.photo{width:min(100%,400px)}
+.hearts{font-size:clamp(28px,8vw,48px)}
+.cut{height:min(300px,70vw)}
+nav a{padding:10px 9px;font-size:12px}
+form{width:100%}
+#hero,#couple,#countdown,#events,#venue,#gallery,#rsvp{text-align:center}
+.hint{max-width:420px;margin-left:auto;margin-right:auto}
 </style>
 </head>
 <body class="locked">
@@ -341,9 +362,6 @@ html{touch-action:manipulation}
 </footer>
 </main>
 
-<button id="music" aria-label="Toggle background music" aria-pressed="false">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
-</button>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer"><button class="x" aria-label="Close">×</button><button class="p" aria-label="Previous">‹</button><img alt=""><button class="n" aria-label="Next">›</button><button class="zo" aria-label="Zoom out">−</button><button class="zi" aria-label="Zoom in">+</button></div>
 
@@ -369,15 +387,6 @@ if(!RM)loop()})();
 /* loading transition */
 addEventListener('load',()=>setTimeout(()=>$('#curtain').classList.add('off'),600));setTimeout(()=>$('#curtain').classList.add('off'),4000);
 
-/* music: soft synthesized drone (swap for your own file via MUSIC_URL if hosted) */
-let ac,mg,playing=false;
-function startMusic(){if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=0;mg.connect(ac.destination);
-[130.81,196,261.63,392].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.type=i?'sine':'triangle';o.frequency.value=f;g.gain.value=[.5,.3,.25,.12][i];
-const l=ac.createOscillator(),lg=ac.createGain();l.frequency.value=.15+i*.07;lg.gain.value=.12;l.connect(lg);lg.connect(g.gain);l.start();o.connect(g);g.connect(mg);o.start()});}
-ac.resume();mg.gain.linearRampToValueAtTime(.16,ac.currentTime+2);playing=true;sync()}
-function stopMusic(){mg.gain.linearRampToValueAtTime(0,ac.currentTime+.6);playing=false;sync()}
-function sync(){const b=$('#music');b.classList.toggle('play',playing);b.setAttribute('aria-pressed',playing)}
-$('#music').onclick=()=>playing?stopMusic():startMusic();
 
 /* open invitation */
 let opened=false;
@@ -385,8 +394,7 @@ function openInv(){if(opened)return;opened=true;$('#hero').classList.add('opened
 const b=document.createElement('div');b.className='burst';
 for(let i=0;i<40;i++){const p=document.createElement('i');p.style.left=Math.random()*100+'%';p.style.setProperty('--x',(Math.random()*160-80)+'px');p.style.setProperty('--r',(Math.random()*720-360)+'deg');p.style.animationDelay=Math.random()*.6+'s';b.appendChild(p)}
 document.body.appendChild(b);setTimeout(()=>b.remove(),3600);
-$('#main').hidden=false;document.body.classList.remove('locked');$('#nav').classList.add('show');$('#music').classList.add('show');
-try{startMusic()}catch(_){}
+$('#main').hidden=false;document.body.classList.remove('locked');$('#nav').classList.add('show');
 setTimeout(()=>$('#couple').scrollIntoView({behavior:RM?'auto':'smooth'}),700);
 observe()};
 
